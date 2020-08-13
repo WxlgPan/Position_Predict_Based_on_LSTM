@@ -4,6 +4,7 @@ Using LSTM to predict user position based on history GPS data of the user
 ## 数据集
 使用的是**Geolife Trajectories 1.3**，当中有181位用户信息，由微软亚洲研究院收集的GPS信息（从2007到2012年）
 下载地址：https://www.microsoft.com/en-us/download/details.aspx?id=52367
+下载完成后解压，将**Geolife Trajectories 1.3**与**LSTM.py**文件置于同一路径下
 
 ## 训练模型
 训练模型的代码存放在**LSTM.py**
