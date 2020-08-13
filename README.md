@@ -9,3 +9,6 @@ Using LSTM to predict user position based on history GPS data of the user
 
 ## 预测位置
 在训练好模型后调用模型进行预测，代码存放在**LSTMPredict.py**
+
+## 主函数
+**main.py**为封装的主函数
