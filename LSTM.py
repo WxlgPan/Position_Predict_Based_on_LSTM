@@ -12,7 +12,8 @@ import os
 import matplotlib.pyplot as plt
 
 class LSTM_createModel:
-    def __init__(self):
+    def __init__(self,usernum=181):
+        self.usernum = usernum
         # 设定为自增长
         os.environ['CUDA_VISIBLE_DEVICES'] = '0'
         self.config = tf.ConfigProto()
@@ -119,13 +120,18 @@ class LSTM_createModel:
         # 读入时间序列的文件数据
         data = np.empty((0, 2))
         #print(data.shape)
+        filenum = 0
+        maxfilenum = 10  #控制读取文件的数量，进而控制样本数
         for i, j, filenamelst in os.walk('./Geolife Trajectories 1.3/Data/' + userid + '/Trajectory/'):
             for filename in filenamelst:
+                filenum += 1
                 tmpdata = pd.read_csv('./Geolife Trajectories 1.3/Data/' + userid + '/Trajectory/' + str(filename),
                                       sep=',',
                                       header=6).iloc[:,
                           0:2].values
                 data = np.concatenate((data, tmpdata), axis=0)
+                if filenum == maxfilenum:
+                    break
         print("样本数：{0}，维度：{1}".format(data.shape[0], data.shape[1]))
         print(data)
         if draw_pic:
@@ -155,7 +161,12 @@ class LSTM_createModel:
         np.save("./npy/"+userid+"_traj_model_trueNorm.npy", normalize)
         model.save("./model/"+userid+"_traj_model.h5")
 
+    def train_every_user(self):
+        for i in range(0,10):
+            userid = str(i).zfill(3)
+            self.train_and_save(userid=userid,train_num=6,pred_num=1,draw_pic=False)
+
 if __name__ == "__main__":
-    newmodel = LSTM_createModel()
-    newmodel.train_and_save(userid='000',train_num=6,pred_num=1)
+    newmodel = LSTM_createModel(181)
+    newmodel.train_every_user()
     
