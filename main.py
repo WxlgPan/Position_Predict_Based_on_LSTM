@@ -1,5 +1,6 @@
 from LSTM import LSTM_createModel
 from LSTMPredict import Predict_via_LSTM_model
+from Group_Rec import Group_Rec
 import numpy as np
 import matplotlib.pyplot as plt
 
@@ -17,17 +18,20 @@ def train_spec_LSTM(userid):
     print("LSTM model of "+userid+" has been trained")
 
 def predict_via_File(userid):
-    x,y = trained_model.predict_fromFile_and_draw(userid=userid,test_num=6,pred_num=1)
+    trained_mode = Predict_via_LSTM_model()
+    x,y = trained_mode.predict_fromFile_and_draw(userid=userid,test_num=6,pred_num=1)
     print("Predict via file complete")
     return x, y
 
 def predict_via_Data(userid, data):
-    x, y = trained_model.predict_viaInput_and_draw(userid=userid, input_data=data, test_num=6, pred_num=1)
+    trained_mode = Predict_via_LSTM_model()
+    x, y = trained_mode.predict_viaInput_and_draw(userid=userid, input_data=data, test_num=6, pred_num=1)
     print("Predict via data complete")
     return x, y
 
 def gain_User_Group(userid):
-    usergrp = ['001','002']
+    group = Group_Rec(181)
+    usergrp = group.getSimUserX(userid)
     return usergrp
 
 def draw_Final_Pic(input_data, x_final, y_final, userid):
@@ -66,6 +70,8 @@ def main(userid='000',fileOrdata='file',input_data=None,):
     # 再根据用户相似信息进行轨迹预测
     # 首先获取相似用户列表
     user_grp = gain_User_Group(userid)
+    if not user_grp:
+        weight_his = 1
 
     x_sim, y_sim = 0, 0
     for user in user_grp:

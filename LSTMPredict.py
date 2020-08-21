@@ -156,6 +156,7 @@ class Predict_via_LSTM_model:
             # 画测试样本数据库
             p1 = plt.scatter(data_all[:-per_num, 1], data_all[:-per_num, 0], c='b', marker='o', label='traj_A')
             p2 = plt.scatter(y_hat[:, 1], y_hat[:, 0], c='r', marker='o', label='pre')
+            plt.title(userid)
             #p3 = plt.scatter(y[:, 1], y[:, 0], c='g', marker='o', label='pre_true')
             plt.legend(loc='upper left')
             plt.grid()

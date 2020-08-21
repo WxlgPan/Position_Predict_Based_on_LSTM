@@ -159,6 +159,8 @@ class LSTM_createModel:
         if not os.path.exists('npy'):
             os.mkdir(os.getcwd() + '\\npy')
         np.save("./npy/"+userid+"_traj_model_trueNorm.npy", normalize)
+        if not os.path.exists('model'):
+            os.mkdir(os.getcwd() + '\\model')
         model.save("./model/"+userid+"_traj_model.h5")
 
     def train_every_user(self):
